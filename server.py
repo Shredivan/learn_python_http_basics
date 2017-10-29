@@ -1,18 +1,14 @@
-# import server & socket
-import SimpleHTTPServer
-import SocketServer
+import BaseHTTPServer
+from SimpleHTTPServer import SimpleHTTPRequestHandler
 
-# Define the port
-PORT = 8000
+Handler = SimpleHTTPRequestHandler
+Server = BaseHTTPServer.HTTPServer
 
-# Define request handler
-Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
+Server_address = ('0.0.0.0', 8000)
 
-# Define socket
-httpd = SocketServer.TCPServer(("", PORT), Handler)
+Handler.protocol_version = 'HTTP/1.1'
+httpd = Server(Server_address, Handler)
 
-# Test server is working
-print ("serving at port", PORT)
+print ('Server running on', Server_address)
 
-# Loop requests
 httpd.serve_forever()
